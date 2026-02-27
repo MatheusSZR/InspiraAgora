@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InspiraAgora • Frases Motivacionais</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main class="app">
+        <header class="hero">
+            <h1>InspiraAgora</h1>
+            <p class="subtitle">Seu impulso diário de motivação ✨</p>
+        </header>
+
+        <section class="quote-card" aria-live="polite">
+            <p id="quote-text">Clique no botão para receber uma frase motivacional.</p>
+            <p id="quote-author"></p>
+        </section>
+
+        <section class="controls">
+            <button id="new-quote-btn" class="btn">Nova frase</button>
+            <button id="copy-btn" class="btn btn-secondary">Copiar frase</button>
+        </section>
+
+        <p id="status" class="status" role="status"></p>
+    </main>
+
+    <script>
+        const quotes = [
+            { text: "A persistência realiza o impossível.", author: "Provérbio Chinês" },
+            { text: "Não espere por oportunidades, crie-as.", author: "George Bernard Shaw" },
+            { text: "Você é mais forte do que imagina.", author: "Autor desconhecido" },
+            { text: "Grandes jornadas começam com pequenos passos.", author: "Lao Tsé" },
+            { text: "Seu esforço de hoje é sua conquista de amanhã.", author: "Autor desconhecido" },
+            { text: "Disciplina é a ponte entre metas e realizações.", author: "Jim Rohn" },
+            { text: "Nunca é tarde para começar de novo.", author: "Autor desconhecido" },
+            { text: "Tudo que você precisa está do outro lado do medo.", author: "George Addair" }
+        ];
+
+        const quoteText = document.getElementById("quote-text");
+        const quoteAuthor = document.getElementById("quote-author");
+        const status = document.getElementById("status");
+        const newQuoteBtn = document.getElementById("new-quote-btn");
+        const copyBtn = document.getElementById("copy-btn");
+
+        function getRandomQuote() {
+            const index = Math.floor(Math.random() * quotes.length);
+            return quotes[index];
+        }
+
+        function showRandomQuote() {
+            const quote = getRandomQuote();
+            quoteText.textContent = `“${quote.text}”`;
+            quoteAuthor.textContent = `— ${quote.author}`;
+            status.textContent = "";
+        }
+
+        async function copyQuote() {
+            if (!quoteAuthor.textContent) {
+                status.textContent = "Gere uma frase antes de copiar.";
+                return;
+            }
+
+            const fullQuote = `${quoteText.textContent} ${quoteAuthor.textContent}`;
+
+            try {
+                await navigator.clipboard.writeText(fullQuote);
+                status.textContent = "Frase copiada com sucesso!";
+            } catch {
+                status.textContent = "Não foi possível copiar automaticamente.";
+            }
+        }
+
+        newQuoteBtn.addEventListener("click", showRandomQuote);
+        copyBtn.addEventListener("click", copyQuote);
+
+        showRandomQuote();
+    </script>
+</body>
+</html>
