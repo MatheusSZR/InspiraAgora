@@ -17,7 +17,15 @@ public class QuoteService {
             new Quote("Seu esforço de hoje é sua conquista de amanhã.", "Autor desconhecido"),
             new Quote("Disciplina é a ponte entre metas e realizações.", "Jim Rohn"),
             new Quote("Nunca é tarde para começar de novo.", "Autor desconhecido"),
-            new Quote("Tudo que você precisa está do outro lado do medo.", "George Addair")
+            new Quote("Tudo que você precisa está do outro lado do medo.", "George Addair"),
+            new Quote("O sucesso é ir de fracasso em fracasso sem perder o entusiasmo.", "Winston Churchill"),
+            new Quote("A imaginação é mais importante que o conhecimento.", "Albert Einstein"),
+            new Quote("Seja a mudança que você deseja ver no mundo.", "Mahatma Gandhi"),
+            new Quote("O que não nos mata, nos torna mais fortes.", "Friedrich Nietzsche"),
+            new Quote("Tudo parece impossível até que seja feito.", "Nelson Mandela"),
+            new Quote("Penso, logo existo.", "René Descartes"),
+            new Quote("Sorte é o que acontece quando a preparação encontra a oportunidade.", "Sêneca")
+            // Adicione aqui as demais frases que estavam no seu index.html original para o banco ficar gigante!
     );
 
     public Quote getRandomQuote() {
