@@ -5,172 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>InspiraAgora • Frases Motivacionais</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <main class="app">
-        <header class="hero">
-            <h1>InspiraAgora</h1>
-            <p class="subtitle">Seu impulso diário de motivação ✨</p>
-        </header>
+<main class="app">
+    <header class="hero">
+        <h1>InspiraAgora</h1>
+        <p class="subtitle">Seu impulso diário de motivação ✨</p>
+    </header>
 
-        <section class="quote-card" aria-live="polite">
-            <p id="quote-text">Clique no botão para receber uma frase motivacional.</p>
+    <section class="quote-card" aria-live="polite">
+        <div id="quote-container" class="fade-in">
+            <p id="quote-text">Carregando frase...</p>
             <p id="quote-author"></p>
-        </section>
+        </div>
+    </section>
 
-        <section class="controls">
-            <button id="new-quote-btn" class="btn">Nova frase</button>
-            <button id="copy-btn" class="btn btn-secondary">Copiar frase</button>
-        </section>
+    <section class="controls">
+        <button id="new-quote-btn" class="btn"><i class="fa-solid fa-rotate-right"></i> Nova frase</button>
+        <button id="copy-btn" class="btn btn-secondary"><i class="fa-regular fa-copy"></i> Copiar</button>
+        <button id="whatsapp-btn" class="btn btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+        <button id="twitter-btn" class="btn btn-twitter"><i class="fa-brands fa-x-twitter"></i> Postar</button>
+    </section>
 
-        <p id="status" class="status" role="status"></p>
-    </main>
+    <p id="status" class="status" role="status"></p>
+</main>
 
-    <script>
-        const quotes = [
-    { text: "A persistência realiza o impossível.", author: "Provérbio Chinês" },
-    { text: "Não espere por oportunidades, crie-as.", author: "George Bernard Shaw" },
-    { text: "Você é mais forte do que imagina.", author: "Autor desconhecido" },
-    { text: "Grandes jornadas começam com pequenos passos.", author: "Lao Tsé" },
-    { text: "Seu esforço de hoje é sua conquista de amanhã.", author: "Autor desconhecido" },
-    { text: "Disciplina é a ponte entre metas e realizações.", author: "Jim Rohn" },
-    { text: "Nunca é tarde para começar de novo.", author: "Autor desconhecido" },
-    { text: "Tudo que você precisa está do outro lado do medo.", author: "George Addair" },
-    { text: "O Senhor é o meu pastor; de nada terei falta.", author: "Bíblia (Salmos 23:1)" },
-    { text: "Ainda que eu ande pelo vale da sombra da morte, não temerei mal algum, porque tu estás comigo.", author: "Bíblia (Salmos 23:4)" },
-    { text: "Entrega o teu caminho ao Senhor; confia nele, e ele o fará.", author: "Bíblia (Salmos 37:5)" },
-    { text: "Elevo os meus olhos para os montes; de onde me vem o socorro? O meu socorro vem do Senhor.", author: "Bíblia (Salmos 121:1-2)" },
-    { text: "Lâmpada para os meus pés é tua palavra, e luz para o meu caminho.", author: "Bíblia (Salmos 119:105)" },
-    { text: "Deus é o nosso refúgio e fortaleza, socorro bem presente na angústia.", author: "Bíblia (Salmos 46:1)" },
-    { text: "Os que confiam no Senhor serão como o monte Sião, que não se abala, mas permanece para sempre.", author: "Bíblia (Salmos 125:1)" },
-    { text: "Espere no Senhor. Seja forte! Coragem! Espere no Senhor.", author: "Bíblia (Salmos 27:14)" },
-    { text: "Alegrem-se na esperança, sejam pacientes na tribulação, perseverem na oração.", author: "Bíblia (Romanos 12:12)" },
-    { text: "Confia no Senhor de todo o teu coração e não te estribes no teu próprio entendimento.", author: "Bíblia (Provérbios 3:5)" },
-    { text: "O coração do homem planeja o seu caminho, mas o Senhor lhe dirige os passos.", author: "Bíblia (Provérbios 16:9)" },
-    { text: "A resposta branda desvia o furor, mas a palavra dura suscita a ira.", author: "Bíblia (Provérbios 15:1)" },
-    { text: "Consagre ao Senhor tudo o que você faz, e os seus planos serão bem-sucedidos.", author: "Bíblia (Provérbios 16:3)" },
-    { text: "O temor do Senhor é o princípio do conhecimento.", author: "Bíblia (Provérbios 1:7)" },
-    { text: "O ferro com ferro se afia; assim, o homem afia o rosto do seu amigo.", author: "Bíblia (Provérbios 27:17)" },
-    { text: "Mais vale o bom nome do que as muitas riquezas.", author: "Bíblia (Provérbios 22:1)" },
-    { text: "Tudo posso naquele que me fortalece.", author: "Bíblia (Filipenses 4:13)" },
-    { text: "Porque para Deus nada é impossível.", author: "Bíblia (Lucas 1:37)" },
-    { text: "Buscai, pois, em primeiro lugar, o seu reino e a sua justiça, e todas estas coisas vos serão acrescentadas.", author: "Bíblia (Mateus 6:33)" },
-    { text: "Vinde a mim, todos os que estais cansados e sobrecarregados, e eu vos aliviarei.", author: "Bíblia (Mateus 11:28)" },
-    { text: "Peçam, e lhes será dado; busquem, e encontrarão; batam, e a porta lhes será aberta.", author: "Bíblia (Mateus 7:7)" },
-    { text: "Eu sou o caminho, a verdade e a vida. Ninguém vem ao Pai, a não ser por mim.", author: "Bíblia (João 14:6)" },
-    { text: "Conhecereis a verdade, e a verdade vos libertará.", author: "Bíblia (João 8:32)" },
-    { text: "Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus.", author: "Bíblia (Romanos 8:28)" },
-    { text: "Se Deus é por nós, quem será contra nós?", author: "Bíblia (Romanos 8:31)" },
-    { text: "O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.", author: "Bíblia (1 Coríntios 13:4)" },
-    { text: "Portanto, não se preocupem com o amanhã, pois o amanhã trará as suas próprias preocupações.", author: "Bíblia (Mateus 6:34)" },
-    { text: "Não se deixem vencer pelo mal, mas vençam o mal com o bem.", author: "Bíblia (Romanos 12:21)" },
-    { text: "Lancem sobre ele toda a sua ansiedade, porque ele tem cuidado de vocês.", author: "Bíblia (1 Pedro 5:7)" },
-    { text: "Porque andamos por fé, e não por vista.", author: "Bíblia (2 Coríntios 5:7)" },
-    { text: "A fé é a certeza daquilo que esperamos e a prova das coisas que não vemos.", author: "Bíblia (Hebreus 11:1)" },
-    { text: "Combati o bom combate, terminei a corrida, guardei a fé.", author: "Bíblia (2 Timóteo 4:7)" },
-    { text: "Não fui eu que ordenei a você? Seja forte e corajoso! Não se apavore nem desanime.", author: "Bíblia (Josué 1:9)" },
-    { text: "Clame a mim e eu responderei e direi a você coisas grandiosas e insondáveis que você não conhece.", author: "Bíblia (Jeremias 33:3)" },
-    { text: "Pois eu conheço os planos que tenho para vocês, planos de fazê-los prosperar e não de causar dano.", author: "Bíblia (Jeremias 29:11)" },
-    { text: "Os que esperam no Senhor renovarão as suas forças. Voarão alto como águias.", author: "Bíblia (Isaías 40:31)" },
-    { text: "A glória desta última casa será maior do que a da primeira, diz o Senhor dos Exércitos.", author: "Bíblia (Ageu 2:9)" },
-    { text: "Não temas, porque eu sou contigo; não te assombres, porque eu sou teu Deus.", author: "Bíblia (Isaías 41:10)" },
-    { text: "A verdadeira medida de um homem não se vê na forma como se comporta em momentos de conforto e conveniência, mas em como se mantém em tempos de controvérsia e desafio.", author: "Martin Luther King Jr." },
-    { text: "O insucesso é apenas uma oportunidade para recomeçar com mais inteligência.", author: "Henry Ford" },
-    { text: "No meio da dificuldade encontra-se a oportunidade.", author: "Albert Einstein" },
-    { text: "A imaginação é mais importante que o conhecimento.", author: "Albert Einstein" },
-    { text: "Seja a mudança que você deseja ver no mundo.", author: "Mahatma Gandhi" },
-    { text: "O fraco jamais perdoa: o perdão é uma das características do forte.", author: "Mahatma Gandhi" },
-    { text: "A educação é a arma mais poderosa que você pode usar para mudar o mundo.", author: "Nelson Mandela" },
-    { text: "Tudo parece impossível até que seja feito.", author: "Nelson Mandela" },
-    { text: "A mente que se abre a uma nova ideia jamais voltará ao seu tamanho original.", author: "Albert Einstein" },
-    { text: "Conhece-te a ti mesmo e conhecerás o universo e os deuses.", author: "Sócrates" },
-    { text: "A vida não examinada não vale a pena ser vivida.", author: "Sócrates" },
-    { text: "Só sei que nada sei.", author: "Sócrates" },
-    { text: "O que não nos mata, nos torna mais fortes.", author: "Friedrich Nietzsche" },
-    { text: "Aqueles que não conseguem lembrar o passado estão condenados a repeti-lo.", author: "George Santayana" },
-    { text: "A única constante na vida é a mudança.", author: "Heráclito" },
-    { text: "Você não pode pisar no mesmo rio duas vezes.", author: "Heráclito" },
-    { text: "Viver é a coisa mais rara do mundo. A maioria das pessoas apenas existe.", author: "Oscar Wilde" },
-    { text: "O sucesso é ir de fracasso em fracasso sem perder o entusiasmo.", author: "Winston Churchill" },
-    { text: "O pessimista vê dificuldade em cada oportunidade; o otimista vê oportunidade em cada dificuldade.", author: "Winston Churchill" },
-    { text: "Penso, logo existo.", author: "René Descartes" },
-    { text: "Para compreender as pessoas devo tentar ouvir o que elas não estão dizendo.", author: "Clarice Lispector" },
-    { text: "O tempo é um tecido invisível em que se pode bordar tudo.", author: "Machado de Assis" },
-    { text: "A alegria de fazer o bem é a única felicidade verdadeira.", author: "Léon Tolstói" },
-    { text: "Não corrigir nossas falhas é o mesmo que cometer novos erros.", author: "Confúcio" },
-    { text: "O silêncio é um amigo que nunca trai.", author: "Confúcio" },
-    { text: "Se quiseres conhecer o passado, examina o teu presente, que é o resultado; se quiseres conhecer o futuro, examina o teu presente, que é a causa.", author: "Confúcio" },
-    { text: "A suprema arte da guerra é derrotar o inimigo sem lutar.", author: "Sun Tzu" },
-    { text: "A coragem não é ausência do medo; é a persistência apesar do medo.", author: "Desconhecido" },
-    { text: "Faça o que puder, com o que tiver, onde estiver.", author: "Theodore Roosevelt" },
-    { text: "A felicidade não é algo pronto. Ela vem de suas próprias ações.", author: "Dalai Lama" },
-    { text: "Nossas vidas começam a terminar no dia em que nos calamos sobre as coisas que importam.", author: "Martin Luther King Jr." },
-    { text: "Eu tenho um sonho de que um dia esta nação se levantará e viverá o verdadeiro significado de sua crença.", author: "Martin Luther King Jr." },
-    { text: "A beleza está nos olhos de quem vê.", author: "Platão" },
-    { text: "A medida do amor é amar sem medida.", author: "Santo Agostinho" },
-    { text: "Ter fé é assinar uma folha em branco e deixar que Deus nela escreva o que quiser.", author: "Santo Agostinho" },
-    { text: "Sorte é o que acontece quando a preparação encontra a oportunidade.", author: "Sêneca" },
-    { text: "Não é que tenhamos pouco tempo, mas perdemos muito.", author: "Sêneca" },
-    { text: "Nenhum vento sopra a favor de quem não sabe para onde ir.", author: "Sêneca" },
-    { text: "O homem é a medida de todas as coisas.", author: "Protágoras" },
-    { text: "Inteligência é a capacidade de se adaptar à mudança.", author: "Stephen Hawking" },
-    { text: "Duas coisas são infinitas: o universo e a estupidez humana. Mas, em relação ao universo, ainda não tenho certeza absoluta.", author: "Albert Einstein" },
-    { text: "Nós somos o que fazemos repetidamente. A excelência, portanto, não é um ato, mas um hábito.", author: "Aristóteles" },
-    { text: "O ignorante afirma, o sábio duvida, o sensato reflete.", author: "Aristóteles" },
-    { text: "Mais vale aprender coisas inúteis do que não aprender nada.", author: "Sêneca" },
-    { text: "A simplicidade é o último grau de sofisticação.", author: "Leonardo da Vinci" },
-    { text: "Aprender é a única coisa de que a mente nunca se cansa, nunca tem medo e nunca se arrepende.", author: "Leonardo da Vinci" },
-    { text: "Se você passar por um inferno, continue caminhando.", author: "Winston Churchill" },
-    { text: "Duvida da luz dos astros, de que o sol tenha calor, duvida até da verdade, mas confia em meu amor.", author: "William Shakespeare" },
-    { text: "É mais fácil obter o que se deseja com um sorriso do que à ponta da espada.", author: "William Shakespeare" },
-    { text: "Chorar sobre as desgraças passadas é a maneira mais segura de atrair outras.", author: "William Shakespeare" },
-    { text: "Somos feitos da mesma matéria que os nossos sonhos.", author: "William Shakespeare" },
-    { text: "O homem nasce livre, e por toda parte encontra-se acorrentado.", author: "Jean-Jacques Rousseau" },
-    { text: "Posso não concordar com nenhuma das palavras que você disser, mas defenderei até a morte o direito de você dizê-las.", author: "Evelyn Beatrice Hall (Atribuído a Voltaire)" },
-    { text: "Aquele que tem um 'porquê' para viver pode suportar quase qualquer 'como'.", author: "Friedrich Nietzsche" },
-    { text: "Acredite em si próprio e chegará um dia em que os outros não terão outra escolha senão acreditar com você.", author: "Cynthia Kersey" },
-    { text: "Você falha em 100% dos tiros que não dá.", author: "Wayne Gretzky" },
-    { text: "Daqui a vinte anos, você estará mais decepcionado com as coisas que não fez do que com as que fez.", author: "Mark Twain" },
-    { text: "O segredo de progredir é começar.", author: "Mark Twain" }
-];
-        const quoteText = document.getElementById("quote-text");
-        const quoteAuthor = document.getElementById("quote-author");
-        const status = document.getElementById("status");
-        const newQuoteBtn = document.getElementById("new-quote-btn");
-        const copyBtn = document.getElementById("copy-btn");
-
-        function getRandomQuote() {
-            const index = Math.floor(Math.random() * quotes.length);
-            return quotes[index];
-        }
-
-        function showRandomQuote() {
-            const quote = getRandomQuote();
-            quoteText.textContent = `“${quote.text}”`;
-            quoteAuthor.textContent = `— ${quote.author}`;
-            status.textContent = "";
-        }
-
-        async function copyQuote() {
-            if (!quoteAuthor.textContent) {
-                status.textContent = "Gere uma frase antes de copiar.";
-                return;
-            }
-
-            const fullQuote = `${quoteText.textContent} ${quoteAuthor.textContent}`;
-
-            try {
-                await navigator.clipboard.writeText(fullQuote);
-                status.textContent = "Frase copiada com sucesso!";
-            } catch {
-                status.textContent = "Não foi possível copiar automaticamente.";
-            }
-        }
-
-        newQuoteBtn.addEventListener("click", showRandomQuote);
-        copyBtn.addEventListener("click", copyQuote);
-
-        showRandomQuote();
-    </script>
+<script src="app.js"></script>
 </body>
 </html>
